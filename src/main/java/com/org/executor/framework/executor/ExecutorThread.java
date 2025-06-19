@@ -42,7 +42,6 @@ public class ExecutorThread {
         Future<String> callableType = executorService.submit(() -> "IT take Callable and return result");
         Future<String> taskResultForFuture = executorService.submit(() -> System.out.println("Executes the given tasks, returning a list of Futures holding their status and results when all complete"), "task result for Future");
 
-        executorService.invokeAll()
 
 //        try {
 //            executorService.awaitTermination(4, TimeUnit.SECONDS);
