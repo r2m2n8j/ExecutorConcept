@@ -1,11 +1,11 @@
 # Executor Interface:
--Executor is a simple interface defined in the java.util.concurrent package.
--It has a single method
--void execute(Runnable command);
--This method takes a Runnable task and submits it for execution.
+- Executor is a simple interface defined in the java.util.concurrent package.
+- It has a single method
+- void execute(Runnable command);
+- This method takes a Runnable task and submits it for execution.
 The Executor implementation handles the details of how and when the task will be run
 (e.g., in a new thread, in a thread pool).
--It does not provide any mechanisms for controlling or tracking the submitted tasks
+- It does not provide any mechanisms for controlling or tracking the submitted tasks
 (e.g., getting results, canceling tasks, or shutting down the executor).
 
 # ExecutorService Interface:
