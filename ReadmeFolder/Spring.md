@@ -11,13 +11,15 @@
 
         
     class Controller{
-        Service service; this is the reference of service
+        //this is the reference of service
+        Service service; 
     }
     
 
         
     class Service {
-        Repository repository; this is the reference of repository
+        //this is the reference of repository
+        Repository repository; 
     }
     
     
