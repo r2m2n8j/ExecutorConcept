@@ -20,8 +20,9 @@
         Repository repository; this is the reference of repository
     }
     
-    **So If we want to create object that litirally we have to create using new keywords. 
-    ** So If we have n number of classes that we have to create object of each class with the new keyword.
+    
+- So If we want to create object that litirally we have to create using new keywords. 
+- So If we have n number of classes that we have to create object of each class with the new keyword.
 
 
 - So if we create an object with own (using new keyword) we as a developer have to manage entire cycle of it.
