@@ -19,6 +19,9 @@ The Executor implementation handles the details of how and when the task will be
 *   Cancel a running or pending task.
 -   Bulk Task Execution: Methods like invokeAny() and invokeAll() enable executing collections of tasks and waiting for their completion or the completion of the first successful task.
 
+
+    Executor executor = Executors.newSingleThreadExecutor();
+    ExecutorService executorService = Executors.newFixedThreadPool(9);
     Future<?> runnableType = executorService.submit(() -> System.out.println("It take Runnable interface"));
     Future<String> callableType = executorService.submit(() -> "IT take Callable and return result");
     Future<String> taskResultForFuture = executorService.submit(() -> System.out.println("Executes the given tasks, returning a list of Futures holding their status and results when all complete"), "task result for Future");
@@ -26,16 +29,17 @@ The Executor implementation handles the details of how and when the task will be
 
 # Discuss Two Small Concept of Runnable and Callable
 
-** Runnable and Callable ** interfaces are used to define tasks that can be executed by threads.
+**Runnable and Callable** interfaces are used to define tasks that can be executed by threads.
 But they differ in their ability to return results and handle exceptions.
-Runnable's run() method does not return a value and cannot throw checked exceptions.
-while Callable's call() method can return a value and throw exceptions.
+Runnable **run()** method does not return a value and cannot **throw checked exceptions**.
+while Callable's **call()** method can return a value and **throw checked exceptions**.
 
 Runnable:
 Purpose: Represents a task that does not return any result and cannot throw checked exceptions.
 Method: run().
-Example: Runnable r = () -> System.out.println("Running a task");.
+Example: .
 
+    Runnable r = () -> System.out.println("Running a task");
     @FunctionalInterface
     public interface Runnable {
         /**

@@ -1,3 +1,6 @@
+https://www.edureka.co/blog/interview-questions/spring-interview-questions/
+
+
 # What is IoC Controller and Dependency Injection
 - In the typical web application 
 - Client want data and that data may store in SQL/ NoSQL database.
@@ -9,25 +12,21 @@
 - In Java, Every thing is object.
 - If we want to work with service in the controller than we have to create a **Service object** inside the controller.
 
-        
+    
     class Controller{
-        //this is the reference of service
         Service service; 
     }
-    
 
-        
     class Service {
-        //this is the reference of repository
         Repository repository; 
     }
     
     
-- So If we want to create object that litirally we have to create using new keywords. 
-- So If we have n number of classes that we have to create object of each class with the new keyword.
+- So If we want to create object than literally we have to create an object using new keywords. 
+- So If we have n number of classes than we have to create object of each class with the new keyword.
 
 
-- So if we create an object with own (using new keyword) we as a developer have to manage entire cycle of it.
+- So if we create an object with own (using new keyword) we as a developer we have to manage entire life cycle of it.
 - Like Managing object Destroying object
 
 
@@ -83,8 +82,8 @@
         
     public class Main {
         public static void main(String[] args) {
-            Engine engine = new Engine();       // You create it
-            Car car = new Car(engine);          // You inject it manually
+            Engine engine = new Engine();
+            Car car = new Car(engine);
             car.drive();
         }
     }
@@ -244,6 +243,11 @@ OR
 3. XML config (old style)
 
 
+
+
+
+# Spring Bean Life Cycle
+https://medium.com/@sendvjs/spring-bean-life-cycle-9363332c335e
 
 
 
