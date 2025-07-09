@@ -1,5 +1,7 @@
 ### Question
 
+
+##### ArrayList and Linked List
 - Is array list dynamic or static?
 - Difference between Array, Arraylist and Linked list?
 - And Internal working of Arraylist? And what data structure works internally in arraylist?
@@ -7,6 +9,8 @@
 - Linked list internal implementation
 - How Linked list maintains insertion order?
 
+
+##### HashMap
 
 - What is the Hashmap? Internal working of HashMap
 - Concurrent Hashmap internal implementation regarding segmentation.
@@ -23,8 +27,9 @@
 - How can we sort custom object while adding into HashMap?
 
 - HashMap internal working on Java 8
-- 
 
+
+##### Set 
 
 - What is the difference between List and Set?
 - HashSet? What is the data structure works internally in HashSet?
@@ -32,17 +37,21 @@
 - Explain the difference between the TreeSet and Set?
 - What is the 
 
-
+##### Comparator and Comparable
 - Difference between Comparator and Comparable?
 - When compareTo() and compare() will be used, Explain with some use case?
-- 
 
 
 
+##### Queue
 - What are all the callbacks in Queue to add and delete data?
 - Implement Queue using stack
 - Implement Queue using only one stack
-- 
+
+
+
+
+
 
 
 
