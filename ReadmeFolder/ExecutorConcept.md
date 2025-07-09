@@ -12,19 +12,20 @@ The Executor implementation handles the details of how and when the task will be
 -   ExecutorService is a subinterface of Executor, also found in java.util.concurrent.
 -   It extends the basic functionality of Executor by adding features for managing the lifecycle of both the tasks and the executor itself.
 -   Key additions in ExecutorService include:
--   Lifecycle Management: Methods like shutdown(), shutdownNow(), and isTerminated() allow for graceful or immediate termination of the executor and management of its state.
--   Task Tracking and Control: The submit() methods (which can take Runnable or Callable tasks) return a Future object. This Future can be used to:
-*   Retrieve the result of a Callable task.
-*   Check if a task has completed.
-*   Cancel a running or pending task.
--   Bulk Task Execution: Methods like invokeAny() and invokeAll() enable executing collections of tasks and waiting for their completion or the completion of the first successful task.
+-   **Lifecycle Management**: Methods like shutdown(), shutdownNow(), and isTerminated() allow for graceful or immediate termination of the executor and management of its state.
+-   **Task Tracking and Control**: The submit() methods (which can take Runnable or Callable tasks) return a Future object. This Future can be used to:
+    *   Retrieve the result of a Callable task.
+    *   Check if a task has completed.
+    *   Cancel a running or pending task.
+-   **Bulk Task Execution**: Methods like invokeAny() and invokeAll() enable executing collections of tasks and waiting for their completion or the completion of the first successful task.
 
 
-    Executor executor = Executors.newSingleThreadExecutor();
-    ExecutorService executorService = Executors.newFixedThreadPool(9);
-    Future<?> runnableType = executorService.submit(() -> System.out.println("It take Runnable interface"));
-    Future<String> callableType = executorService.submit(() -> "IT take Callable and return result");
-    Future<String> taskResultForFuture = executorService.submit(() -> System.out.println("Executes the given tasks, returning a list of Futures holding their status and results when all complete"), "task result for Future");
+
+            Executor executor = Executors.newSingleThreadExecutor();
+            ExecutorService executorService = Executors.newFixedThreadPool(9);
+            Future<?> runnableType = executorService.submit(() -> System.out.println("It take Runnable interface"));
+            Future<String> callableType = executorService.submit(() -> "IT take Callable and return result");
+            Future<String> taskResultForFuture = executorService.submit(() -> System.out.println("Executes the given tasks, returning a list of Futures holding their status and results when all complete"), "task result for Future");
 
 
 # Discuss Two Small Concept of Runnable and Callable
