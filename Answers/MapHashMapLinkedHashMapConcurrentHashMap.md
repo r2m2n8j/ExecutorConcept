@@ -98,7 +98,7 @@ Within the Linked List, the Inner Node class includes attributes such as a **has
 - This linear search process had a **time complexity of O(n)**, where n is the number of elements in the linked list. 
 - As the number of collisions increased, the length of the **linked lists grew**, **leading to slower retrieval times**.
 
-- Hence to solve this problem **Tree data structure is used instead of Linked list to handle collisions**.
+- Hence, to solve this problem **Tree data structure is used instead of Linked list to handle collisions**.
 
 - In Java 8, when the number of nodes in a **single bucket reaches a threshold** called **Treeify Threshold** the HashMap converts the internal structure of that bucket from a **linked list to a Tree data structure**. 
 - All node within the bucket are converted into TreeNode. 
@@ -109,6 +109,27 @@ Within the Linked List, the Inner Node class includes attributes such as a **has
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+# What Is TreeMap?
+- TreeMap is a Red-Black tree-based map implementation. 
+- The map is sorted according to the **natural ordering** of **its keys** (for **Integer** as key natural order is **ascending order**, for **String** as key natural order is **alphabetical order**), or by a Comparator provided at map creation time, depending on which constructor is used.
+
+#### How TreeMap works? 
+- TreeMap is nothing like HashMap; implementation of Map interface.
+- TreeMap does not use **hashing for storing keys**. It uses a data structure called **the Red-Black tree**. 
+- This implementation provides guaranteed **log(n) time** cost for the **containsKey, get, put and remove** operations.
 
 
 
