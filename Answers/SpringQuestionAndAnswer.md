@@ -222,6 +222,123 @@
 
 - **WHAT is Spring AOP?**
   - Spring AOP allows you to separate cross-cutting concerns from your core business logic by writing them in one place (called an aspect) and letting Spring automatically apply them behind the scenes.
+  - Like Login, Security, load balancing,....
+
+
+
+
+# Spring boot
+
+### What is Spring Boot? How does it differ from the traditional Spring Framework?
+
+- Spring Framework + Embedded Server + Auto Configuration + Starter templates = Spring Boot
+- **Spring Boot is an **open-source** framework that is built on top of the Spring framework.
+- **Spring boot** allows developers to quickly create **stand-alone, Production ready** Spring applications with minimal setup and configuration. 
+
+
+
+### How Spring Boot provides autoconfiguration?
+- Spring Boot provides autoconfiguration by automatically configuring Spring applications based on the dependencies present on the classpath, reducing the need of manual configuration and allowing developers to focus on writing business logic.
+
+        <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-validation</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+
+
+
+### What is the role of @SpringBootApplication annotation?
+- When we run our spring boot application Spring boot first run the main method.
+- And Here It find the @SpringBootApplication annotation.
+- So @SpringBootApplication is first Bootstraps(setting up the application) the application.
+- A single @SpringBootApplication annotation can be used to enable these three features, that is:
+1. @Configuration : It uses @Configuration annotation and mark this class as a source of Spring been definitions.
+2. @ComponentScan : It uses @ComponentScan annotation and scan the package(com.org.example) and find all the Spring component.
+3. @EnableAutoConfiguration : IT uses @EnableAutoConfiguration and automatically configure all the Spring Component that are scan previously.
+
+           import org.springframework.boot.SpringApplication;
+           import org.springframework.boot.autoconfigure.SpringBootApplication;
+        
+           @SpringBootApplication
+           public class SbEcomApplication {
+             public static void main(String[] args) {
+               SpringApplication.run(SbEcomApplication.class, args);
+             }
+           }
+    
+### What is the package of all Annotation?
+
+
+### Difference between @Controller and @RestController
+- @Controller : is a general purpose annotation used to define a controller that handles web requests. It is typically used in web applications where the response is HTML, JSP, or other types of views.
+- @ResController : is a specialized version of @Controller annotation which is used to create RESTful web services where the response is typically in JSON or XML format. but it does not return views.
+- @RestController : is the combination of @Controller and @ResponseBody
+### Difference between @RequestParams, @RequestBody and @PathVariable
+- These are used to extract values from HTTP requests in REST APIs.
+1. @RequestParam
+   - Purpose:
+   - Used to extract query parameters from the URL.
+
+          @GetMapping("/public/products")
+           public ResponseEntity<ProductResponse> getAllProducts(
+           @RequestParam(name = "pageNumber", defaultValue = AppConstants.PAGE_NUMBER, required = false) Integer pageNumber,
+           @RequestParam(name = "pageSize", defaultValue = AppConstants.PAGE_SIZE, required = false) Integer pageSize,
+           @RequestParam(name = "sortBy", defaultValue = AppConstants.SORT_PRODUCTS_BY, required = false) String sortBy,
+           @RequestParam(name = "sortOrder", defaultValue = AppConstants.SORT_DIRECTION, required = false) String sortOrder
+           ){
+           ProductResponse productResponse = productService.getAllProducts(pageNumber, pageSize, sortBy, sortOrder);
+              return new ResponseEntity<>(productResponse, HttpStatus.OK);
+           }
+
+2. @PathVariable
+   - Purpose:
+   - Used to extract values from the URI path itself.
+
+
+          @PutMapping("/api/admin/categories/{categoryId}")
+          public ResponseEntity<CategoryDTO> updateCategory(@RequestBody CategoryDTO categoryDTO, @PathVariable Long categoryId){
+      
+            CategoryDTO savedCategoryDto = categoryService.updateCategory(categoryDTO, categoryId);
+              return new ResponseEntity<>(savedCategoryDto, HttpStatus.OK);
+          }
+
+
+3. @RequestBody
+   - Purpose:
+   - Used to bind the entire HTTP request body to a Java object.
+   - Typically used for POST, PUT, PATCH requests with JSON payloads.
+
+  - See above example based on below CategoryDTO
+
+            class CategoryDTO{
+                // Variables
+                // constructor
+                // Setter getter
+                // Methods....
+            }
+  -  @RequestBody maps the JSON body to the CategoryDTO object automatically.
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
