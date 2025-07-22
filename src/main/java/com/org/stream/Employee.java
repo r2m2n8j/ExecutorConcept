@@ -1,15 +1,31 @@
 package com.org.stream;
 
 public class Employee {
-    private final long id;
-    private final String name;
-    private final Double salary;
-    private final String dept;
+    private  long id;
+    private  String name;
+    private  Double salary;
+    private  String dept;
 
     public Employee(long id, String name, Double salary, String dept){
         this.id = id;
         this.name = name;
         this.salary = salary;
+        this.dept = dept;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setSalary(Double salary) {
+        this.salary = salary;
+    }
+
+    public void setDept(String dept) {
         this.dept = dept;
     }
 

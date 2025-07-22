@@ -3,10 +3,10 @@
 - **Start ->**
   - Intermediate Operations
 
-        filter  map   flatMap   distinct
-  - Terminal Operators
+        filter  map   flatMap   distinct    sorted    peek    limit      skip 
+    - Terminal Operators
 
-            forEach   collect     reduce    findFirst
+              forEach   collect     reduce    allMatch      findFirst     findAny     min     max     toArray
   - Collectors
 
               joining     groupingBy      counting
@@ -57,16 +57,172 @@
           - But flatMap automatically flattens it into a Stream<String>
 
   
+#### Distinct 
+- distinct is used to remove duplicate items from the list.
+- We can do this with the help of set but in set order of item may not be same as list.
+- But distinct preserve the order of items.
+
+
+      public static void main(String[] args) {
+        List<Integer> list = Arrays.asList(1,2,2,3,4,5,4,5,6,6,7,8);
+        System.out.println(
+                list.stream()
+                        .distinct()
+                        .toList()
+        );
+      }
+
+
+#### Sorted
+- It is used to sort the list.
+- With the help of sort we can sort the list in natural sorting order or reverse sorting order.
+
+
+       private static List<Integer> sortInReverseSortingOrder(List<Integer> number) {
+        return number.stream()
+                .sorted(Comparator.reverseOrder())
+                .collect(Collectors.toList());
+      }
+
+      private static List<Integer> sortInNaturalSortingOrder(List<Integer> number) {
+          return number.stream()
+                  .sorted()
+                  .collect(Collectors.toList());
+      }
 
 
 
 
+#### Peak
+- The peek method in Java Streams is primarily used for debugging purposes. It allows you to perform an intermediate operation on each element of the stream without modifying the stream itself.
+- It is used when we want to debug intermediate operation. 
+- Because It is difficult to know what is happening inside the stream intermediate operation. At that time peek with help us. So If we want we can do logging inside the peek so it will not affect the stream as well as it will give us clear view.
+
+
+#### limit
+- Limit is an intermediate operation. It will use to limit the stream object.
+- In a list have n numbers, and we want to perform task only on 5 then we used limit(5);
+
+#### skip
+- skip is used to skip some part in the stream.
+- Suppose I have a list on integer and I want to skip first 5 number and return remaining number than we have to use skip(5).
+
+
+#### reduce
+- The reduce method in Java Streams is used to perform a reduction on the elements of a stream, combining them into a single result.
+- It applies a binary operation ( a function that takes two arguments and returns a single result) to the elements of the stream, repeatedly until all elements have been processed and a single value remains.
+
+      List<Integer> numbers = Arrays.asList(1,2,3,4,5);
+
+        Optional<Integer> result = numbers.stream()
+                .reduce((a,b) -> a * b);
+
+        System.out.println(result.get());
+      Output - 120
+
+
+- Steps of Reduction:
+  1. Start with the first two elements : 1 * 2 = 2
+  2. Multiply the result with the next element : 2 * 3 = 6
+  3. Multiply the result with the next element : 6 * 4 = 24
+  4. Multiply the result with the last element : 24 * 5 = 120
+
+
+
+#### allMatch
+- allMatch method in Java Streams is used to check if all elements in the stream satisfy a given predicate.
+- It returns true if every element in the stream matches the predicate, and false otherwise.
+
+      list = 1,2,3,4,5
+      list.stream().allMatch(n -> n > 0);
+      output = true
+      
+      list1 = 1,2,3,4,-1,2,3,4,5,6,78,9
+      list.stream().allMatch(n -> n > 0);
+      output = false
+
+- even it not check whole list items it found n = -1 and it is less than 0 it returns false immediately.
 
 
 
 
+# Short-Circuiting
+- The allMatch operation is short-circuiting, meaning it stops processing as soon as it finds the first element that does not match the predicate.
+- If it finds such an element, it immediately returns false.
 
 
+#### anyMatch
+- The anyMatch method checks whether al least one element in the stream matches a given **predicate**.
+- It returns true as soon as it finds an element that satisfies the predicate and stops.
+- Future processing. If no elements match it return false.
+- anyMatch is **short-circuiting**, meaning it stops processing as soon as it finds the first element that matches the predicate, optimizing performance.
+
+
+
+#### noneMatch
+- The noneMatch method in Java Streams is used to check if no elements in the stream match a given predicate.
+- It returns true if none of the elements satisfy the predicate and false if at least one element does.
+- Like allMatch and anyMatch, noneMatch is short-circuiting. 
+- It stops processing as soon as it finds the first element that matchs the predicate and immediately return false.
+
+
+
+#### findFirst and findAny
+- findFirst is used to retrieve the first element in a stream that matches a given condition or simply the first element in the stream if no filtering is applied.
+- It returns the first element wrapped in an Optional, which is a container object that may or may not contain a non-null value.
+
+- retrieve any element from the stream that matches a given condition, or simply any element form the stream if no filtering is applied.
+- It returns the element wrapped in an Optional which may or may not contain a value.
+
+
+#### max and min
+
+- Used to find the maximum and minimum elements in a stream, respectively, based on a given comparator or natural ordering.
+- These methods return an **Optional** because the **stream might be empty**.
+
+
+
+#### toArray
+- When we want to convert collection into array.
+
+      List<String> words = Arrays.asList("Apple", "Banana", "Cherry", "Guava");
+      String [] result = words.stream().toArray(String[] :: new);
+      output: ["Apple", "Banana", "Cherry", "Guava"]
+
+
+# Collectors
+
+### joining
+- is used to concatenate the elements of a stream into a single String.
+- It's part of the Collectors utility class and provides a convenient way to aggregate elements into a string format with optional **delimiters, prefixes, and suffixes**.
+
+        List<String> list = Arrays.asList("anuj", "kumar","mishra");
+        System.out.println(
+                list.stream()
+                        .collect(Collectors.joining(", "))
+        );
+        Outpur = anuj, kumar, mishra
+
+        List<String> list = Arrays.asList("anuj", "kumar","mishra");
+        System.out.println(
+                list.stream()
+                        .collect(Collectors.joining(", ", "[","]"))
+        );
+
+        output = [anuj, kumar, mishra]
+
+
+
+#### groupingBy
+- group elements of the stream by a specified classifier function.
+- It is a powerful feature provided by the Collectors utility class and is commonly used for **aggregating and categorizing** data into a **Map**
+- Where keys are the result of applying the classifier function and the values are lists of items corresponding to each key.
+
+          Map<String, Optional<Employee>> result = list.stream()
+                .collect(Collectors.groupingBy(
+                        Employee::getDept,
+                        Collectors.maxBy(Comparator.comparingDouble(Employee::getSalary))
+                ));
 
 
 

@@ -19,7 +19,6 @@ public class FlatMapExample {
         List<String> listOfItems = convertListOfListIntoSingleList(listOfList);
         System.out.println(listOfItems);
 
-
         Set<List<String>> setOfList = new HashSet<>();
         setOfList.add(Arrays.asList("Book", "Pen", "Pencil"));
         setOfList.add(Arrays.asList("Computer", "Laptop", "Mouse", "Keyboard"));

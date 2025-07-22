@@ -29,9 +29,23 @@ public class EmployeeImp {
 
 //        findHighestSalary(list);
 //        findAverageSalary(list);
-        usingStreamFindHighestSalaryDeptBy(list);
+//        usingStreamFindHighestSalaryDeptBy(list);
+        increaseSalaryBy5Present(list);
 
     }
+
+    private static void increaseSalaryBy5Present(List<Employee> list) {
+        List<Employee> increasedSalary = list.stream()
+                .map(e ->{
+                    Double salary = e.getSalary();
+                    Double increasedBy5Present = salary + ((salary*5)/100);
+                    e.setSalary(increasedBy5Present);
+                    return e;
+                })
+                .toList();
+        System.out.println(increasedSalary);
+    }
+
     public static void usingStreamFindHighestSalaryDeptBy(List<Employee> list){
         Map<String, Optional<Employee>> result = list.stream()
                 .collect(Collectors.groupingBy(
