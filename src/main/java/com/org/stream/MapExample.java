@@ -5,6 +5,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class MapExample {
+    // The Stream.map() method is used to transform one object into another by applying a function.
+    // The collect() method of Stream class can be used to accumulate elements of any Stream into a Collection.
+
     /**
      *  map is an Intermediate function.
      *  map is not reduce number of item that is present in the stream

@@ -17,11 +17,16 @@ public class MaxLengthOfString {
 
     private static String findStringOfNthHighest(String s) {
 
+//        Arrays.stream(s.split(" "))
+//                .sorted(Comparator.reverseOrder())
+//                .findFirst()
         return null;
     }
 
     // Remove duplicates from the String and return in the same order.
     private static String removeDuplicatesFromStringAndReturnInSameOrder(String s) {
+        // "dabcadefg"
+        // "dabcefg"
         Stream<String> stringStream =  Arrays.stream(s.split(""))
                         .distinct();
         String result  = stringStream.collect(Collectors.joining());
