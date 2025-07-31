@@ -13,6 +13,30 @@
 
 - **End ->**
 
+### map()
+- Transforms each element of the stream using a function.
+- Returns a Stream of transformed elements.
+- One-to-one mapping.
+
+        List<String> words = List.of("hello", "world");
+        List<Integer> lengths = words.stream()
+            .map(String::length)
+            .collect(Collectors.toList());
+        
+        // Output: [5, 5]
+
+      __________________________________________________
+      List<List<String>> listOfLists = List.of(
+          List.of("a", "b"),
+          List.of("c", "d")
+        );
+
+      Stream<Stream<String>> mapped = listOfLists.stream()
+          .map(list -> list.stream());
+
+      // Output: Stream<Stream<String>>
+
+
 
 ### flatMap
 - **flatMap** is an intermediate operation that transforms each element of a stream into zero or more elements of a new stream, and then concatenates those resulting streams into a single, flattened stream.
