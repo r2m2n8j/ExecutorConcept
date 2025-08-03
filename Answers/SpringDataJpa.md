@@ -256,7 +256,7 @@
 
             id	        name
             1	        Anuj
-            2	        Buttu
+            2	        Bittu
 
     - Course Table
 
@@ -271,8 +271,8 @@
             1	            2
             2	            1
 
-- Alice enrolled in Java and Spring Boot
-- Bob enrolled in Java only
+- Anuj enrolled in Java and Spring Boot
+- Bittu enrolled in Java only
 
 
 - What if you forget mappedBy?
@@ -287,6 +287,25 @@
 - In real world, it's often better to convert it to two @OneToMany relationships with a separate entity (called a join entity or bridge entity).
 
 - @ManyToMany is used when multiple records in one table relate to multiple records in another. I define the owning side with @JoinTable, and the inverse side uses mappedBy. Internally, JPA (via Hibernate) creates a third table to maintain the relationship.
+
+
+### What is the purpose of JpaRepository?
+- It is a Spring Data intrface that provides CRUD, pagination and custom query functionality.
+
+- Interacting with the User entity without writing any DAO implementation.
+
+
+### Difference b/w CrudRepository and JpaRepository
+- JpaRepository extends CrudRepository and adds Jpa - specification features like flushing and batch operations.
+- JpaRepository for advanced operations like pagination, and batch inserts.
+
+### How do you define custom queries in Spring Data JPA?
+- Using @Query annotation.
+
+
+
+
+
 
 
 
