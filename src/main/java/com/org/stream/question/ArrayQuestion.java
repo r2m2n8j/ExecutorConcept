@@ -12,123 +12,215 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class ArrayQuestion {
-    public static void main(String[] args) {
+        public static void main(String[] args) {
 
-        // divideArrayWithEvenAndOddElement();
-        // arrangeInGroup();
-        // arrangeInGroupUsingStream();
-        containsOnlyInteger();
+                // divideArrayWithEvenAndOddElement();
+                // arrangeInGroup();
+                // arrangeInGroupUsingStream();
+                // containsOnlyInteger();
+                // productOfFirstTwoInteger();
+                // groupOfAnagram();
+                // multiplyAlternativeNumber();
+                // multiplyFirstLastAndSoOn();
+                moveZeroToBeginningAtArray();
 
-    }
-
-    //Given a list of integer find the product of first two integer
-    public static void productOfFirstTwoInteger(){
-        int [] arr = {11,22,3,4,5};
-        IntStream list = Arrays.stream(arr).limit(2);
-        
-    }
-    // Given a list of strings, ceate a list that contains only integer
-    public static void containsOnlyInteger() {
-        String[] s = { "abc", "123", "23", "axv", "433", "abx" };
-        List<Integer> list = Arrays.stream(s)
-                .filter(str -> str.matches("[0-9]+"))
-                .map(Integer::valueOf)
-                .toList();
-        System.out.println("list of integer "+ list);//list of integer [123, 23, 433]
-    }
-
-    // Given an array of integers, group the number by range in which they belong
-    /*
-     * I/P : int []arr = {2,3,10,14,20,22}
-     * O/P : {0=[2,3], 10=[10,14], 20=[20,22]}
-     * 0 - All numbers thats are between 0 To 9 comes in this group
-     * 10 - All numbers that's are b/w 10 To 19 comes in this group
-     */
-
-    public static void arrangeInGroupUsingStream() {
-        int[] arr = { 2, 2, 14, 3, 4, 14, 17, 10, 20, 22, 32, 11, 25 };
-
-        Map<Integer, List<Integer>> map = Arrays.stream(arr).boxed()
-                .collect(Collectors.groupingBy(
-                        val -> (val / 10) * 10,
-                        Collectors.toList()));
-        System.out.println("Map :: " + map);// Map :: {0=[2, 2, 3, 4], 20=[20, 22, 25], 10=[14, 14, 17, 10, 11], 30=[32]}
-
-        HashMap<Integer, List<Integer>> hashMap = Arrays.stream(arr).boxed()
-                .collect(Collectors.groupingBy(
-                        val -> (val / 10) * 10,
-                        HashMap::new,
-                        Collectors.toList()));
-        System.out.println("hash map = " + hashMap); // hash map = {0=[2, 2, 3, 4], 20=[20, 22, 25], 10=[14, 14, 17, 10, 11], 30=[32]}
-
-        TreeMap<Integer, List<Integer>> treeMap = Arrays.stream(arr)
-                .boxed()
-                .collect(Collectors.groupingBy(
-                        val -> (val / 10) * 10,
-                        TreeMap::new,
-                        Collectors.toList()));
-
-        System.out.println("tree map = " + treeMap); // tree map = {0=[2, 2, 3, 4], 10=[14, 14, 17, 10, 11], 20=[20, 22, 25], 30=[32]}
-
-        LinkedHashMap<Integer, Set<Integer>> linkedHashMap = Arrays.stream(arr).boxed()
-                .collect(Collectors.groupingBy(
-                        val -> (val / 10) * 10,
-                        LinkedHashMap::new,
-                        Collectors.toSet()));
-        System.out.println("linked hash map = " + linkedHashMap);// linked hash map = {0=[2, 3, 4], 10=[17, 10, 11, 14], 20=[20, 22, 25], 30=[32]}
-    }
-
-    public static void arrangeInGroup() {
-        int[] arr = { 2, 3, 4, 14, 17, 10, 20, 22, 32 };
-        Map<Integer, List<Integer>> map = new HashMap<>();
-        for (int val : arr) {
-            int key = (val / 10) * 10;
-            // if (map.containsKey(key)) {
-            // List<Integer> list = map.get(key);
-            // list.add(val);
-            // map.put(key, list);
-            // } else {
-            // List<Integer> list = new ArrayList<>();
-            // list.add(val);
-            // map.put(key, list);
-            // }
-            map.computeIfAbsent(key, k -> new ArrayList<>()).add(val);
         }
-        System.out.println(map);
-    }
+        // Move all zero's to beginning of array int[]
+        public static void moveZeroToBeginningAtArray(){
+                int[]arr = {5,0,1,2,0,5,0,8,0};
+                int j =arr.length-1;
+                for(int i=arr.length-1;i>=0;i--){
+                       if(arr[i]!=0) arr[j--] = arr[i];
+                }
+                while(j>=0){
+                        arr[j--] = 0;
+                }
+                System.out.println(Arrays.toString(arr));
+        }
+        // Multiply 1st and last element, 2nd and 2nd last element, 3rd and 3rd last element and so on in an array.
+        public static void multiplyFirstLastAndSoOn(){
+                int arr[] ={3,2,4,5,9,4,5,6};
+                // int i=0,j= arr.length-1, ans = 0;
+                // while (i<=j) {
+                //         System.out.println(arr[i]*arr[j]);
+                //         i++;j--;
+                // }
+                IntStream.range(0, arr.length/2)
+                .map(x->arr[x] * arr[arr.length-x-1])
+                .forEach(System.out::println);
+        } 
 
-    // Given a list of integers, divide it into two arrays having an even number and
-    // other have odd number
-    public static void divideArrayWithEvenAndOddElement() {
-        // {1,2,3,4,5,6,7,8,9,10}
-        int[] arr = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
-        // We can convert it into List<Integer>
-        List<Integer> list = Arrays.stream(arr)
-                .boxed()
-                .toList();
+        // Multiply alternative numbers in an array.
+        public static void multiplyAlternativeNumber() {
+                int[] arr = { 4, 5, 3, 2, 3, 5, 6 };
+                int ans = IntStream.range(0, arr.length)
+                                .filter(x -> x % 2 == 0)
+                                .map(x -> arr[x])
+                                .reduce(1, (a, b) -> a * b);
+                        
+                System.out.println(ans);
+        }
 
-        // Using a way to convert arrays into 2 part even and odd
-        // So I'm converting it into Map key = true for even and false for odd
+        // Group of anagram
+        public static void groupOfAnagram() {
+                String[] arr = { "act", "god", "cat", "dog", "tac" };
+                /*
+                 * if we sort two strings which are anagrams of each other, then the sorted
+                 * strings will always be the same. So, we can maintain a hash map with the
+                 * sorted strings as keys and the index of the anagram group in the result array
+                 * as the value.
+                 * Time Complexity: O(n * k * log(k)), where n is the number of words and k is
+                 * the maximum length of a word.
+                 * Auxiliary Space: O(n * k), to store the result.
+                 */
+                List<List<String>> ans = new ArrayList<>();
+                Map<String, Integer> map = new HashMap<>();
+                for (int i = 0; i < arr.length; i++) {
+                        String s = arr[i];
+                        char[] charArr = s.toCharArray();
+                        Arrays.sort(charArr);
+                        s = new String(charArr);
 
-        Map<Boolean, List<Integer>> mapList = list.stream()
-                .collect(Collectors.groupingBy(x -> x % 2 == 0, Collectors.toList()));
-        // We can use partitioningBy as well
-        Map<Boolean, List<Integer>> mapListUsingPartitioningByMethod = list.stream()
-                .collect(Collectors.partitioningBy(x -> x % 2 == 0, Collectors.toList()));
-        System.out.println(mapList);
-        System.out.println(mapListUsingPartitioningByMethod);
-        // {false=[1, 3, 5, 7, 9], true=[2, 4, 6, 8, 10]}
+                        if (!map.containsKey(s)) {
+                                map.put(s, ans.size());
+                                ans.add(new ArrayList<>());
+                        }
+                        ans.get(map.get(s)).add(arr[i]);
+                }
+                System.out.println(ans);
 
-        // Now we need only list not in map
-        List<List<Integer>> listOfOddAndEven = mapList.entrySet()
-                .stream()
-                .map(x -> x.getValue())
-                .toList();
+                // Group Anagram with the help of Stream
 
-        System.out.println(listOfOddAndEven);
+                List<List<String>> list = Arrays.stream(arr)
+                                .collect(Collectors.groupingBy(s -> {
+                                        char[] chars = s.toCharArray();
+                                        Arrays.sort(chars);
+                                        return new String(chars);
+                                }))
+                                .values()
+                                .stream()
+                                .toList();
+                System.out.println("Group of anagram using Stream " + list);
+        }
 
-        List<List<Integer>> listOfOddAndEven1 = mapList.values()
-                .stream()
-                .toList();
-    }
+        // Given a list of integer find the product of first two integer
+        public static void productOfFirstTwoInteger() {
+                int[] arr = { 11, 22, 3, 4, 5 };
+                int product = Arrays.stream(arr)
+                                .limit(2)
+                                .reduce(1, (a, b) -> a * b);
+                System.out.println(product);
+        }
+
+        // Given a list of strings, create a list that contains only integer
+        public static void containsOnlyInteger() {
+                String[] s = { "abc", "123", "23", "axv", "433", "abx" };
+                List<Integer> list = Arrays.stream(s)
+                                .filter(str -> str.matches("[0-9]+"))
+                                .map(Integer::valueOf)
+                                .toList();
+                System.out.println("list of integer " + list);// list of integer [123, 23, 433]
+        }
+
+        // Given an array of integers, group the number by range in which they belong
+        /*
+         * I/P : int []arr = {2,3,10,14,20,22}
+         * O/P : {0=[2,3], 10=[10,14], 20=[20,22]}
+         * 0 - All numbers thats are between 0 To 9 comes in this group
+         * 10 - All numbers that's are b/w 10 To 19 comes in this group
+         */
+
+        public static void arrangeInGroupUsingStream() {
+                int[] arr = { 2, 2, 14, 3, 4, 14, 17, 10, 20, 22, 32, 11, 25 };
+
+                Map<Integer, List<Integer>> map = Arrays.stream(arr).boxed()
+                                .collect(Collectors.groupingBy(
+                                                val -> (val / 10) * 10,
+                                                Collectors.toList()));
+                System.out.println("Map :: " + map);// Map :: {0=[2, 2, 3, 4], 20=[20, 22, 25], 10=[14, 14, 17, 10, 11],
+                                                    // 30=[32]}
+
+                HashMap<Integer, List<Integer>> hashMap = Arrays.stream(arr).boxed()
+                                .collect(Collectors.groupingBy(
+                                                val -> (val / 10) * 10,
+                                                HashMap::new,
+                                                Collectors.toList()));
+                System.out.println("hash map = " + hashMap); // hash map = {0=[2, 2, 3, 4], 20=[20, 22, 25], 10=[14, 14,
+                                                             // 17, 10,
+                                                             // 11], 30=[32]}
+
+                TreeMap<Integer, List<Integer>> treeMap = Arrays.stream(arr)
+                                .boxed()
+                                .collect(Collectors.groupingBy(
+                                                val -> (val / 10) * 10,
+                                                TreeMap::new,
+                                                Collectors.toList()));
+
+                System.out.println("tree map = " + treeMap); // tree map = {0=[2, 2, 3, 4], 10=[14, 14, 17, 10, 11],
+                                                             // 20=[20, 22,
+                                                             // 25], 30=[32]}
+
+                LinkedHashMap<Integer, Set<Integer>> linkedHashMap = Arrays.stream(arr).boxed()
+                                .collect(Collectors.groupingBy(
+                                                val -> (val / 10) * 10,
+                                                LinkedHashMap::new,
+                                                Collectors.toSet()));
+                System.out.println("linked hash map = " + linkedHashMap);// linked hash map = {0=[2, 3, 4], 10=[17, 10,
+                                                                         // 11, 14],
+                                                                         // 20=[20, 22, 25], 30=[32]}
+        }
+
+        public static void arrangeInGroup() {
+                int[] arr = { 2, 3, 4, 14, 17, 10, 20, 22, 32 };
+                Map<Integer, List<Integer>> map = new HashMap<>();
+                for (int val : arr) {
+                        int key = (val / 10) * 10;
+                        // if (map.containsKey(key)) {
+                        // List<Integer> list = map.get(key);
+                        // list.add(val);
+                        // map.put(key, list);
+                        // } else {
+                        // List<Integer> list = new ArrayList<>();
+                        // list.add(val);
+                        // map.put(key, list);
+                        // }
+                        map.computeIfAbsent(key, k -> new ArrayList<>()).add(val);
+                }
+                System.out.println(map);
+        }
+
+        // Given a list of integers, divide it into two arrays having an even number and
+        // other have odd number
+        public static void divideArrayWithEvenAndOddElement() {
+                // {1,2,3,4,5,6,7,8,9,10}
+                int[] arr = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+                // We can convert it into List<Integer>
+                List<Integer> list = Arrays.stream(arr)
+                                .boxed()
+                                .toList();
+
+                // Using a way to convert arrays into 2 part even and odd
+                // So I'm converting it into Map key = true for even and false for odd
+
+                Map<Boolean, List<Integer>> mapList = list.stream()
+                                .collect(Collectors.groupingBy(x -> x % 2 == 0, Collectors.toList()));
+                // We can use partitioningBy as well
+                Map<Boolean, List<Integer>> mapListUsingPartitioningByMethod = list.stream()
+                                .collect(Collectors.partitioningBy(x -> x % 2 == 0, Collectors.toList()));
+                System.out.println(mapList);
+                System.out.println(mapListUsingPartitioningByMethod);
+                // {false=[1, 3, 5, 7, 9], true=[2, 4, 6, 8, 10]}
+
+                // Now we need only list not in map
+                List<List<Integer>> listOfOddAndEven = mapList.entrySet()
+                                .stream()
+                                .map(x -> x.getValue())
+                                .toList();
+
+                System.out.println(listOfOddAndEven);
+
+                List<List<Integer>> listOfOddAndEven1 = mapList.values()
+                                .stream()
+                                .toList();
+        }
 }
