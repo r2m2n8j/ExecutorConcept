@@ -2,7 +2,9 @@ package com.org.stream.question;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,6 +12,7 @@ import java.util.Set;
 import java.util.TreeMap;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 public class ArrayQuestion {
         public static void main(String[] args) {
@@ -22,33 +25,111 @@ public class ArrayQuestion {
                 // groupOfAnagram();
                 // multiplyAlternativeNumber();
                 // multiplyFirstLastAndSoOn();
-                moveZeroToBeginningAtArray();
+                // moveZeroToBeginningAtArray();
+                // findDistinctValue();
+                // findSumOfArrayElement();
+                squares();
+        }
+
+        // Convert the list of integer into its square
+        public static void squares(){
+                int arr[] = {1,2,3,4,5};
+                List<Integer> list = Arrays.stream(arr)
+                .boxed().map(x -> x*x).collect(Collectors.toList());
+                System.out.println(list);
+        }
+
+        // Find the sum of all the elements in a list
+        public static void findSumOfArrayElement(){
+                List<Integer> list = Arrays.asList(1,2,3,4,5);
+                int sum = list.stream().mapToInt(x->x).sum();
+                System.out.println(sum);
+        }
+
+        // Given an array of integer, return true if it contains distinct values and false otherwise.
+        public static void findDistinctValue(){
+                int[] arr = { 5, 0, 1, 2, 8};
+                // Set<Integer> set = new HashSet<>();
+                // for(int i=0;i<arr.length;i++){
+                //         if(set.contains(arr[i])){
+                //                 System.out.println(false);
+                //                 break;
+                //         }
+                //         set.add(arr[i]);
+                // }
+                // System.out.println(true);
+
+                // Converting arr -> List<Integer>
+                List<Integer> list = Arrays.stream(arr).boxed().toList();
+                // Making Map with key value pair. Map<Integer,Long> map
+                Map<Integer, Long> map = list.stream()
+                .collect(Collectors.groupingBy(x->x, Collectors.counting()));
+
+                // Take all values from the map
+                Collection<Long> values = map.values();
+
+                //noneMatch(take predicate) and return boolean
+                boolean distinctChecker = values.stream().noneMatch(x->x>1);
+                System.out.println(distinctChecker);
 
         }
+
         // Move all zero's to beginning of array int[]
-        public static void moveZeroToBeginningAtArray(){
-                int[]arr = {5,0,1,2,0,5,0,8,0};
-                int j =arr.length-1;
-                for(int i=arr.length-1;i>=0;i--){
-                       if(arr[i]!=0) arr[j--] = arr[i];
-                }
-                while(j>=0){
-                        arr[j--] = 0;
-                }
-                System.out.println(Arrays.toString(arr));
+        public static void moveZeroToBeginningAtArray() {
+                int[] arr = { 5, 0, 1, 2, 0, 5, 0, 8, 0 };
+                // int j =arr.length-1;
+                // for(int i=arr.length-1;i>=0;i--){
+                // if(arr[i]!=0) arr[j--] = arr[i];
+                // }
+                // while(j>=0){
+                // arr[j--] = 0;
+                // }
+                // System.out.println(Arrays.toString(arr));
+
+                /**
+                 * First approach
+                 * First create a zeors list
+                 * Second create a nonZeros list
+                 * zeros list + nonZeros list
+                 */
+                List<Integer> list = Arrays.stream(arr)
+                                .boxed()
+                                .toList();
+                // zeros list
+                List<Integer> zeros = list.stream()
+                                .filter(x -> x == 0)
+                                .toList();
+                // non zeros list
+                List<Integer> nonZeros = list.stream()
+                                .filter(x -> x != 0)
+                                .toList();
+
+                List<Integer> finaList = new ArrayList<>();
+                // finaList.addAll(zeros);
+                // finaList.addAll(nonZeros);
+                // System.out.println(finaList);
+
+                Map<Boolean, List<Integer>> partitioned = list.stream()
+                                .collect(Collectors.partitioningBy(x -> x != 0));
+                System.out.println(partitioned);
+                finaList.addAll(partitioned.get(false));
+                finaList.addAll(partitioned.get(true));
+                System.out.println(finaList);
         }
-        // Multiply 1st and last element, 2nd and 2nd last element, 3rd and 3rd last element and so on in an array.
-        public static void multiplyFirstLastAndSoOn(){
-                int arr[] ={3,2,4,5,9,4,5,6};
+
+        // Multiply 1st and last element, 2nd and 2nd last element, 3rd and 3rd last
+        // element and so on in an array.
+        public static void multiplyFirstLastAndSoOn() {
+                int arr[] = { 3, 2, 4, 5, 9, 4, 5, 6 };
                 // int i=0,j= arr.length-1, ans = 0;
                 // while (i<=j) {
-                //         System.out.println(arr[i]*arr[j]);
-                //         i++;j--;
+                // System.out.println(arr[i]*arr[j]);
+                // i++;j--;
                 // }
-                IntStream.range(0, arr.length/2)
-                .map(x->arr[x] * arr[arr.length-x-1])
-                .forEach(System.out::println);
-        } 
+                IntStream.range(0, arr.length / 2)
+                                .map(x -> arr[x] * arr[arr.length - x - 1])
+                                .forEach(System.out::println);
+        }
 
         // Multiply alternative numbers in an array.
         public static void multiplyAlternativeNumber() {
@@ -57,7 +138,7 @@ public class ArrayQuestion {
                                 .filter(x -> x % 2 == 0)
                                 .map(x -> arr[x])
                                 .reduce(1, (a, b) -> a * b);
-                        
+
                 System.out.println(ans);
         }
 

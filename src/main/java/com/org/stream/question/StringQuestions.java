@@ -18,10 +18,39 @@ public class StringQuestions {
         // findWordsWithRespectToVowel();
         // findFirstRepeatedCharacterWithStream();
         // findFirstNonRepeatedCharacterWithStream();
-        arrangeListOfStringInAscendingOrder();
+        // arrangeListOfStringInAscendingOrder();
         // arrangeListOfStringInAscendingOrderWithAlphabeticalOrder();
-
+        // groupStringBasedOnMiddleCharacter();
+        // sortListOfStringInAlphabeticalOrder();
+        stringLength();
+    
     }
+
+    // convert a list of string a list of the length of the string
+    public static void stringLength(){
+        List<String> list = Arrays.asList("null","Ram","Rom","test");
+        List<Integer> lengthOfList = list.stream().map(x-> x.length()).toList();
+        System.out.println(lengthOfList);
+    }
+
+    // Sort a list of Strings in alphabetical order
+    public static void sortListOfStringInAlphabeticalOrder(){
+        List<String> str = Arrays.asList("Zudio","Puma", "Addidas", "MAC","H&M");
+        List<String> sortedString = str.stream().sorted().toList();
+        System.out.println(sortedString);
+    }
+
+    // given the string[] group the strings based on the middle character.
+    public static void groupStringBasedOnMiddleCharacter(){
+        // output {w = [ewe,kwk], h = [jhj, aha], j = [jji]}
+        String [] str = {"ewewwwer", "jjrie", "jhjrre", "kwk", "aha"};
+        Map<String, List<String>> map = Arrays.stream(str)
+        .collect(Collectors.groupingBy(x -> x.substring(x.length()/2,x.length()/2+1)));
+
+        System.out.println(map);
+    }
+
+
     // List of String arrange the string into ascending order according to it's
     // length. If two of String has equal length arrange it with their alphabetically
     // order
