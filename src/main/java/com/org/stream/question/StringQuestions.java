@@ -8,7 +8,10 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class StringQuestions {
     public static void main(String[] args) {
@@ -22,47 +25,114 @@ public class StringQuestions {
         // arrangeListOfStringInAscendingOrderWithAlphabeticalOrder();
         // groupStringBasedOnMiddleCharacter();
         // sortListOfStringInAlphabeticalOrder();
-        stringLength();
-    
+        // convertListOfStringIntoItsLength();
+        // removeAllNumericCharacter();
+        // containingDigits();
+        convertStringToUpperCase();
+
+    }
+
+    // Convert a list of strings to uppercase
+    public static void convertStringToUpperCase(){
+        List<String> list = Arrays.asList(
+            "abc","dev","null", "hello", "Hello");
+
+        List<String> ans = list.stream()
+        .map(x->x.toUpperCase())
+        .toList();
+        System.out.println(ans);
+    }
+
+    // Find the Strings that containing only digits
+    public static void containingDigits(){
+        List<String> list = Arrays.asList("1232","332","null", "ab12ad", "a12gs1dfd3");
+        Pattern pattern = Pattern.compile("[0-9]+");
+        List<String> ans= list.stream()
+        .filter(s->pattern.matcher(s).matches())
+        .toList();
+        System.out.println(ans);
+    }
+    /* 
+        🔹 Step 1: Stream traversal
+            list.stream() → creates a stream of strings, not characters.
+            So iteration is happening string by string, not character by character.
+            First "1232", then "332", then "null", etc.
+        🔹 Step 2: Applying the regex
+            For each string s, this runs:
+                pattern.matcher(s).matches()
+            pattern.matcher(s) creates a Matcher object for the whole string s.
+            .matches() tries to match the entire string against [0-9]+.
+        🔹 Step 3: What [0-9]+ means
+            It doesn’t loop through characters manually.
+            The regex engine does the character-by-character matching internally.
+
+        So when you pass "1232", the regex engine checks:
+            '1' ✅ is a digit
+            '2' ✅ is a digit
+            '3' ✅ is a digit
+            '2' ✅ is a digit
+                → The whole string matches → true.
+
+        But for "ab12ad", the regex engine checks:
+            'a' ❌ not a digit → fails immediately → false.
+    */
+        
+    // Remove all non-numeric characters for a list
+    public static void removeAllNumericCharacter() {
+        List<String> list = Arrays.asList("nu3r3ll", "ab12ad", "a12gs1dfd3", "sf3df34f3");
+        /*Ans should be 22, 12, 1213,3343 
+         * 
+         * The Idea is we are taking a regex that should not be number "[^0-9]" And store it into Pattern
+         * Now traverse throught the string character and If we get non-numeric charater then replace it with empty string.
+         * 
+        */
+
+        Pattern pattern = Pattern.compile("[^0-9]");
+
+        List<String> ans = list.stream()
+        .map(x->pattern.matcher(x).replaceAll(""))
+        .toList();
+
+        System.out.println(ans);
+
     }
 
     // convert a list of string a list of the length of the string
-    public static void stringLength(){
-        List<String> list = Arrays.asList("null","Ram","Rom","test");
-        List<Integer> lengthOfList = list.stream().map(x-> x.length()).toList();
+    public static void convertListOfStringIntoItsLength() {
+        List<String> list = Arrays.asList("null", "Ram", "Rom", "test");
+        List<Integer> lengthOfList = list.stream().map(x -> x.length()).toList();
         System.out.println(lengthOfList);
     }
 
     // Sort a list of Strings in alphabetical order
-    public static void sortListOfStringInAlphabeticalOrder(){
-        List<String> str = Arrays.asList("Zudio","Puma", "Addidas", "MAC","H&M");
+    public static void sortListOfStringInAlphabeticalOrder() {
+        List<String> str = Arrays.asList("Zudio", "Puma", "Addidas", "MAC", "H&M");
         List<String> sortedString = str.stream().sorted().toList();
         System.out.println(sortedString);
     }
 
     // given the string[] group the strings based on the middle character.
-    public static void groupStringBasedOnMiddleCharacter(){
+    public static void groupStringBasedOnMiddleCharacter() {
         // output {w = [ewe,kwk], h = [jhj, aha], j = [jji]}
-        String [] str = {"ewewwwer", "jjrie", "jhjrre", "kwk", "aha"};
+        String[] str = { "ewewwwer", "jjrie", "jhjrre", "kwk", "aha" };
         Map<String, List<String>> map = Arrays.stream(str)
-        .collect(Collectors.groupingBy(x -> x.substring(x.length()/2,x.length()/2+1)));
+                .collect(Collectors.groupingBy(x -> x.substring(x.length() / 2, x.length() / 2 + 1)));
 
         System.out.println(map);
     }
 
-
     // List of String arrange the string into ascending order according to it's
-    // length. If two of String has equal length arrange it with their alphabetically
+    // length. If two of String has equal length arrange it with their
+    // alphabetically
     // order
-    public static void arrangeListOfStringInAscendingOrderWithAlphabeticalOrder(){
-        List<String> list = Arrays.asList("apple", "a", "kiwi", "fog", "frog","banana", "fig", "pineapple");
+    public static void arrangeListOfStringInAscendingOrderWithAlphabeticalOrder() {
+        List<String> list = Arrays.asList("apple", "a", "kiwi", "fog", "frog", "banana", "fig", "pineapple");
         List<String> sortedString = list.stream()
                 .sorted(
-                    Comparator.comparingInt((String s)-> s.length())
-                    .thenComparing(Comparator.naturalOrder())
-                )
+                        Comparator.comparingInt((String s) -> s.length())
+                                .thenComparing(Comparator.naturalOrder()))
                 .toList();
-                System.out.println(sortedString);
+        System.out.println(sortedString);
     }
 
     public static void arrangeListOfStringInAscendingOrder() {
@@ -98,25 +168,25 @@ public class StringQuestions {
             System.out.println("First non repeated char :: " + findFirst.get());
 
         /** O(n^2) */
-        // Optional<Character> findNonRepeated = s.chars()
-        // .mapToObj(c -> {
-        // return (char)c;
-        // })
-        // .filter(ch -> {
-        // List<Character> list = s.chars()
-        // .mapToObj(c -> (char) c)
-        // .toList();
-        // int freq = 0;
-        // if(ch!=' ')
-        // freq = Collections.frequency(list, ch);
+        Optional<Character> findNonRepeated = s.chars()
+                .mapToObj(c -> {
+                    return (char) c;
+                })
+                .filter(ch -> {
+                    List<Character> list = s.chars()
+                            .mapToObj(c -> (char) c)
+                            .toList();
+                    int freq = 0;
+                    if (ch != ' ')
+                        freq = Collections.frequency(list, ch);
 
-        // return freq==1;
-        // })
-        // .findFirst();
-        // if(findNonRepeated.isPresent()){
-        // System.out.println("First Non Repeated Character :: "+
-        // findNonRepeated.get());
-        // }
+                    return freq == 1;
+                })
+                .findFirst();
+        if (findNonRepeated.isPresent()) {
+            System.out.println("First Non Repeated Character :: " +
+                    findNonRepeated.get());
+        }
     }
 
     // Given a String, find the first repeated character

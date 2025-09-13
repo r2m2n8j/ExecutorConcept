@@ -10,6 +10,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
+import java.util.function.Function;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
@@ -28,34 +30,93 @@ public class ArrayQuestion {
                 // moveZeroToBeginningAtArray();
                 // findDistinctValue();
                 // findSumOfArrayElement();
-                squares();
+                // squares();
+                // findDistinctOddNumbers();
+                // findOddNumbersOccursMoreThanOne();
+                // unionOfTwoList();
+                kthSmallestElement();
+        }
+
+        // Find the Kth smallest element in a list of integer
+        public static void kthSmallestElement(){
+                List<Integer> list = Arrays.asList(1,11,4,33,567,0,6,4,3,8,9,5,2);
+                int k = 1;
+                int kthSmallestElement = list.stream()
+                .sorted()
+                .skip(k-1)
+                .findFirst().get();
+                System.out.println(kthSmallestElement);
+        }
+
+        // Find the union of two lists (combine both list)
+        public static void unionOfTwoList(){
+                List<Integer> list1 = Arrays.asList(1,2,3,4);
+                List<Integer> list2 = Arrays.asList(6,7,543,2345,3,234,3);
+
+                List<Integer> concatedList = Stream.concat(list1.stream(), list2.stream())
+                .toList();
+                System.out.println(concatedList);
+        }
+
+        // Find odd number that occurs more than once
+        public static void findOddNumbersOccursMoreThanOne(){
+                List<Integer> list = Arrays.asList(7,1,2,3,3,4,5,5,6,7);
+                Map<Integer,Long> freqMap = list.stream()
+                .filter(x->x%2!=0)
+                .collect(Collectors.groupingBy(
+                        x->x,
+                        LinkedHashMap::new,
+                        Collectors.counting())
+                );
+                System.out.println("freqMap "+ freqMap);
+                
+                List<Integer> duplicatesNumber = freqMap.entrySet().stream()
+                .filter(e->e.getValue()>1)
+                .map(Map.Entry::getKey)
+                .toList();
+                System.out.println(duplicatesNumber);
+
+                int firstDuplicate = duplicatesNumber.isEmpty() ? -1: duplicatesNumber.get(0);
+                System.out.println(firstDuplicate);
+        }
+
+        // Find and print the distinct odd numbers.
+        public static void findDistinctOddNumbers() {
+                List<Integer> list = Arrays.asList(1, 2, 3, 4, 5, 5, 6, 7);
+                List<Integer> distinctList = list.stream()
+                                .filter(x -> x % 2 != 0)
+                                .distinct()
+                                .toList();
+
+                System.out.println(distinctList);
         }
 
         // Convert the list of integer into its square
-        public static void squares(){
-                int arr[] = {1,2,3,4,5};
+        public static void squares() {
+                int arr[] = { 1, 2, 3, 4, 5 };
                 List<Integer> list = Arrays.stream(arr)
-                .boxed().map(x -> x*x).collect(Collectors.toList());
+                                .boxed().map(x -> x * x).collect(Collectors.toList());
                 System.out.println(list);
         }
 
         // Find the sum of all the elements in a list
-        public static void findSumOfArrayElement(){
-                List<Integer> list = Arrays.asList(1,2,3,4,5);
-                int sum = list.stream().mapToInt(x->x).sum();
+        public static void findSumOfArrayElement() {
+                List<Integer> list = Arrays.asList(1, 2, 3, 4, 5);
+                int sum = list.stream().mapToInt(x -> x).sum();
                 System.out.println(sum);
         }
 
-        // Given an array of integer, return true if it contains distinct values and false otherwise.
-        public static void findDistinctValue(){
-                int[] arr = { 5, 0, 1, 2, 8};
+        // Given an array of integer, return true if it contains distinct values and
+        // false otherwise.
+        public static void findDistinctValue() {
+                int[] arr = { 5, 0, 1, 2, 8 };
                 // Set<Integer> set = new HashSet<>();
                 // for(int i=0;i<arr.length;i++){
-                //         if(set.contains(arr[i])){
-                //                 System.out.println(false);
-                //                 break;
-                //         }
-                //         set.add(arr[i]);
+                // if(set.contains(arr[i])){
+                // System.out.println(false);
+                // break;
+                // }
+                // set.add(arr[i]);
                 // }
                 // System.out.println(true);
 
@@ -63,13 +124,13 @@ public class ArrayQuestion {
                 List<Integer> list = Arrays.stream(arr).boxed().toList();
                 // Making Map with key value pair. Map<Integer,Long> map
                 Map<Integer, Long> map = list.stream()
-                .collect(Collectors.groupingBy(x->x, Collectors.counting()));
+                                .collect(Collectors.groupingBy(x -> x, Collectors.counting()));
 
                 // Take all values from the map
                 Collection<Long> values = map.values();
 
-                //noneMatch(take predicate) and return boolean
-                boolean distinctChecker = values.stream().noneMatch(x->x>1);
+                // noneMatch(take predicate) and return boolean
+                boolean distinctChecker = values.stream().noneMatch(x -> x > 1);
                 System.out.println(distinctChecker);
 
         }
