@@ -248,6 +248,55 @@
                         Collectors.maxBy(Comparator.comparingDouble(Employee::getSalary))
                 ));
 
+##### Stream.iterator
+- 🔹 Stream.iterate – WHY?
+- We use Stream.iterate when we want to generate a sequence of values by applying a function repeatedly, instead of pulling from a collection.
+- It’s often useful for creating infinite streams or sequences with a clear pattern.
+
+- 🔹 Syntax (Java 9+)
+                
+                Stream.iterate(seed, predicate, function)
+
+
+        - seed → starting value
+        - predicate → condition to continue (stopping condition)
+        - function → how to compute the next element
+
+
+                Stream.iterate(1, n -> n <= 10, n -> n + 1)
+                .forEach(System.out::println);
+
+                👉 Prints 1 to 10
+                        Here:
+                        Start = 1
+                        Continue while n <= 10
+                        Next value = n + 1
+
+
+                Stream.iterate(0, n -> n <= 20, n -> n + 2)
+                .forEach(System.out::println);
+
+                👉 Prints 0, 2, 4, ..., 20
+
+
+- 🔹 Example 3 – Infinite stream (Java 8 style)
+- Before Java 9, Stream.iterate only had (seed, function) → infinite stream.
+
+                Stream.iterate(1, n -> n + 1)
+                .limit(10)
+                .forEach(System.out::println);
+
+                👉 Prints 1 to 10 (we use limit() to stop)
+
+- 🔹 Example 4 – Fibonacci using iterate
+
+                Stream.iterate(new int[]{0, 1}, t -> new int[]{t[1], t[0] + t[1]})
+                .limit(10)
+                .map(t -> t[0])
+                .forEach(System.out::println);
+
+                👉 Prints first 10 Fibonacci numbers.
+
 
 
 

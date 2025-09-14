@@ -8,6 +8,8 @@ import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
+import java.util.OptionalDouble;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.function.Function;
@@ -34,7 +36,56 @@ public class ArrayQuestion {
                 // findDistinctOddNumbers();
                 // findOddNumbersOccursMoreThanOne();
                 // unionOfTwoList();
-                kthSmallestElement();
+                // intersectionOfTwoList();
+                // kthSmallestElement();
+                // calculateAverageOfNumber();
+                //  generateFibonacciNumber();
+                multipleArrayElement();
+        }
+
+        // Multiple array element
+        public static void multipleArrayElement(){
+                Integer [] arr = {1,2,3,4,5};
+                Optional<Integer> multiple = Arrays.stream(arr)
+                .reduce((e1,e2) -> (e1*e2));
+                if(multiple.isPresent()) System.out.println(multiple.get());
+        }
+
+        // Generate the first 10 Numbers of the Fibonacci Sequence
+        public static void generateFibonacciNumber(){
+                // 0, 1, 1, 2, 3, 5, 8, 13
+                Stream.iterate(new int[]{0,1}, function ->new int []{
+                        function[1], function[0]+function[1]
+                        }
+                )
+                .limit(10)
+                .forEach(arr -> System.out.printf(Arrays.toString(arr) + " "));;
+
+                System.out.println();
+                Stream.iterate(new int[]{0,1}, f-> new int[]{f[1], f[0]+f[1]})
+                .limit(10)
+                .map(f-> f[0])
+                .forEach(arr -> System.out.print(arr + " "));
+
+                int a = 0, b = 1;
+                // System.out.print(a + " ");
+                for(int i=1;i<10;i++){
+                        // if(i==9) System.out.print(b);
+                        // else System.out.print(b + " ");
+                        int temp = b;
+                        b = a+b;
+                        a = temp;
+                }
+                
+        }
+
+        // Calculate the average of all the numbers.
+        public static void calculateAverageOfNumber(){
+                List<Integer> list = Arrays.asList(1,2,3,4,56,6);
+                OptionalDouble optionalDouble = list.stream()
+                .mapToInt(x->x)
+                .average();
+                System.out.println(optionalDouble.getAsDouble());
         }
 
         // Find the Kth smallest element in a list of integer
@@ -48,6 +99,16 @@ public class ArrayQuestion {
                 System.out.println(kthSmallestElement);
         }
 
+        //Find the intersection of two lists using Java Stream
+        public static void intersectionOfTwoList(){
+                List<Integer> list1 = Arrays.asList(1,2,3,4);
+                List<Integer> list2 = Arrays.asList(1,7,543,2345,3,234,3);
+
+                List<Integer> ans = list1.stream()
+                .filter(list2::contains)
+                .toList();
+                System.out.println(ans);
+        }
         // Find the union of two lists (combine both list)
         public static void unionOfTwoList(){
                 List<Integer> list1 = Arrays.asList(1,2,3,4);

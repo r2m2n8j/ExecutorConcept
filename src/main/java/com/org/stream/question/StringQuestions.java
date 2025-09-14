@@ -1,5 +1,6 @@
 package com.org.stream.question;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
@@ -12,6 +13,28 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+class Person{
+    String name;
+    int age;
+
+    public Person(String name,int age){
+        this.name = name;
+        this.age = age;
+    }
+    public String getName(){
+        return this.name;
+    }
+    public int getAge(){
+        return this.age;
+    }
+    public String toString(){
+        return (
+            "Name :: " + this.name +
+            " Age :: "+ this.age
+        );
+    }
+}
 
 public class StringQuestions {
     public static void main(String[] args) {
@@ -28,7 +51,88 @@ public class StringQuestions {
         // convertListOfStringIntoItsLength();
         // removeAllNumericCharacter();
         // containingDigits();
-        convertStringToUpperCase();
+        // convertStringToUpperCase();
+        // domainNamewithFreq();
+        // groupByFirstCharacterAndCountTheFreq();
+       convertListToMap();
+
+    }
+
+    // Convert a list to a map. Given a Person object list convert it to a map with a key as "name" and value as List<Person>.
+    public static void convertListToMap(){
+        Person p1 = new Person("Mohan", 26);
+        Person p2 = new Person("Pihu", 6);
+        Person p3 = new Person("Paurush", 28);
+        Person p4 = new Person("David", 30);
+        Person p5 = new Person("Dayal", 76);
+        List<Person> persons = new ArrayList<>();
+        persons.add(p5);
+        persons.add(p4);
+        persons.add(p3);
+        persons.add(p2);
+        persons.add(p1);
+
+        Map<String, List<Person>> map = persons.stream()
+        .collect(Collectors.groupingBy(
+            person -> person.getName()
+        ));
+        System.out.println(map);
+    }
+
+    // Given a list of strings, group them by their first character and count the number of strings in each group.
+    public static void groupByFirstCharacterAndCountTheFreq(){
+        List<String> strings = Arrays.asList("apple", "banana", "avocado", "apricot", "cherry", "blueberry");
+        Map<Character, Long> map = strings.stream()
+        .collect(Collectors.groupingBy(
+            str -> str.charAt(0),
+            Collectors.counting()
+        ));
+        System.out.println(map);
+    } 
+
+    /*
+     * Transfrom Person object stream into a single string consisting of all names in upper letters separated(pipe) character.
+     * output - MOHAN | PIHU | PAURUSH | DAVID | DAYAL
+     * 
+     */
+
+    // Lecture no - 36 
+    // public static void nameSeparatedWithPipe(){
+    //     Person p1 = new Person("Mohan", 26);
+    //     Person p2 = new Person("Pihu", 6);
+    //     Person p3 = new Person("Paurush", 28);
+    //     Person p4 = new Person("David", 30);
+    //     Person p5 = new Person("Dayal", 76);
+    //     List<Person> persons = new ArrayList<>();
+    //     persons.add(p5);
+    //     persons.add(p4);
+    //     persons.add(p3);
+    //     persons.add(p2);
+    //     persons.add(p1);
+        
+    //     persons.stream()
+    //     .map((p)->{
+
+    //     }).toList();
+    // }
+    
+
+    // There is a list of Employee objects having  field name and email. Find the list of domains(gmail.com, yahoo.com, genpact.com) And the occurrences of each domain.
+    public static void domainNamewithFreq(){
+        List<String> emailList = Arrays.asList(
+            "null@gmail.com",
+            "abc@genpact.com",
+            "zyz@gmail.com", "ram@paypal.com");
+        
+        Map<String, Long> map = emailList.stream()
+        .filter(str->str.contains("@"))// it check either @ is present or not.
+        .map(str->str.substring(str.indexOf("@")+1))
+        .collect(Collectors.groupingBy(
+            x->x,
+            LinkedHashMap::new,
+            Collectors.counting()
+        ));
+        System.out.println(map);
 
     }
 
