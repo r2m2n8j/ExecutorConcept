@@ -117,8 +117,20 @@ public class StringQuestions {
         // mapAndFlatMap();
         // concatenateTwoStream();
         // personNameUniqueAndSorted();
-        productFunctionalities();
+        // productFunctionalities();
+        findNameStartWithAAndCountIt();
 
+    }
+
+    // given a list of names, find all the names that start with 'A', and also print the count of names found.
+    private static void findNameStartWithAAndCountIt(){
+        List<String> names = Arrays.asList("Anuj","Ankit","Anup","Jayant","Kaju");
+        List<String> nameStartWithA = names.stream()
+        .filter(name->name.startsWith("A"))
+        .toList();
+        System.out.println(nameStartWithA);
+        Long countName = nameStartWithA.stream().count();
+        System.out.println(countName);
     }
 
     // Implement the following functionalities of product
