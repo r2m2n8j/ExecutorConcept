@@ -196,7 +196,7 @@ public class ArrayQuestion {
 
         }
 
-        // Move all zero's to beginning of array int[]
+        // Move all zero's beginning of array int[]
         public static void moveZeroToBeginningAtArray() {
                 int[] arr = { 5, 0, 1, 2, 0, 5, 0, 8, 0 };
                 // int j =arr.length-1;
@@ -209,8 +209,7 @@ public class ArrayQuestion {
                 // System.out.println(Arrays.toString(arr));
 
                 /**
-                 * First approach
-                 * First create a zeors list
+                 * First approach                 *  create a zeors list
                  * Second create a nonZeros list
                  * zeros list + nonZeros list
                  */

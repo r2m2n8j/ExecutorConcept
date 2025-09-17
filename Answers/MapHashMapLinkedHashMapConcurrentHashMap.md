@@ -107,19 +107,7 @@ Within the Linked List, the Inner Node class includes attributes such as a **has
     - **_Note_** if the nodes in the bucket **reduces to a certain threshold** the **tree is converted back to linked list**. 
     - This helps **efficient use of memory and balance the performance** as **Tree takes more memory**.
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+    
 
 
 # What Is TreeMap?
@@ -133,6 +121,59 @@ Within the Linked List, the Inner Node class includes attributes such as a **has
 
 
 
+
+
+# ConcurrentHashMap
+- A ConcurrentHashMap is a Java data structure that implements the **java.util.Map** interface.
+- Its purpose is to enable multiple threads to access and modify the map concurrently,
+- Making it a suitable choice for scenarios where synchronization between threads is required while working with key-value pairs.
+
+###### Before Java 8
+- In Java-7 ConcurrentHashMap has **segment based locking**
+- ConcurrentHashMap is divided into 16 segments. Segment means smaller-smaller HashMaps.
+- Only the segment being written to or read from is locked.
+- Read : do not require locking unless there is a write operation happening on the same segment
+- Write : write require lock.
+
+
+###### In Java-8
+- In Java-8 There is no segmentation
+- Compare-And-Swap approach --> no locking except **resizing** or **collision**
+- **Example**
+- Thread A want to do put operation it has key, value
+- Now It get index at which index it has to put key and value. 
+- For this first it check --> last saw --> either it is empty or not.
+- Now it try to insert or update that index according to the last saw. But before do the operation it check that index and compare it with the last saw. Current situation and last saw equal it do operation otherwise it will retry again.
+
+
+    - We have a ConcurrentHashMap<Integer, String> map.
+    - Thread A wants to put(5, "A").
+    - Thread B wants to put(5, "B").
+    - Assume hash(5) → index = 13 in the internal table.
+- Step 1: Both threads calculate the index
+  - Thread A → index 13
+  - Thread B → index 13
+  - (both point to the same bucket)
+
+- Step 2: Last-saw check
+  - Thread A looks at table[13] → sees it’s null (empty bucket).
+  - Thread B also looks at table[13] → sees it’s null (same last-saw snapshot).
+  - Both think: “Great, the slot is empty, I can insert here.”
+
+- Step 3: CAS (Compare-And-Swap) Attempt
+  - Thread A tries CAS(table[13], null, new Node(5, "A"))
+  - Succeeds ✅ because table[13] was indeed null.
+  - Now table[13] = Node(5, "A").
+  - Thread B tries CAS(table[13], null, new Node(5, "B"))
+  - Fails ❌ because table[13] is no longer null (it’s "A" now).
+
+- Step 4: Retry on CAS failure
+  - Thread B re-checks the bucket (table[13]).
+  - It sees: Node(5, "A").
+  - Now Thread B must update instead of insert:
+  - Compares keys: existing key = 5, same as B’s key.
+  - Updates value with CAS: CAS(Node.value, "A", "B").
+  - Succeeds ✅ → final table[13] = Node(5, "B").
 
 
 

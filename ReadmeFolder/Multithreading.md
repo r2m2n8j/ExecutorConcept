@@ -124,6 +124,32 @@
 - setPriority
 - interrupt
 - set Thread name  - create a constructor inside the class 
+- **User thread** - Main thread and JVM is wait for it.
+- **DAEMON THREAD**
+- A thread that is running in the background is called Daemon thread. Like garbage collector.
+- JVM is not wait for the daemon thread.
+
+            myThread.setDaemon(true);
+- It means we are setting myThread as a Daemon so JVM will not wait for it.
+
+
+
+##### Synchronization
+- Follow copy
+- **synchronized** 
+
+            public synchronized void updateStudentInDataBase(Student s){
+                update code....
+            }
+
+            public void readStudentFromDataBase(){
+                read code....
+            }
+
+- **synchronized** area -> when even we are performing update operation (add, remove, delete/replace) Where state of an object is changing.
+- non synchronized area -> where object won't be change like read.
+
+
 
 
 
