@@ -326,6 +326,51 @@
     
 
 
+##### ORM (Object-Relational Mapping)
+
+- ORM is a technique used to map Java objects to database tables.
+- It allows developers to work with databases using object-oriented programming concepts, making it easier to interact with relational databases.
+- Consider a Java class **User** and a database table **users**. ORM frameworks like **Hibernate** can **map the fields in the User class to columns in the users table**, making it easier to insert, update, retrieve, and delete records.
+
+**ORM ek tarika hai usko achieve krne ke liye JPA and JPA internally HIBERNATE, OPENJPA, ECLIPSELINK use krta hai.**
+
+##### JPA (Java Persistence API)
+- A way to achieve ORM, includes interface and annotations that you use in your java classes, requires a persistence provider(ORM tools) for implementation.
+- **Persistence Provider / ORM tools**
+- To use JPA, you need a persistence provider. A Persistence provider is a specific implementation the JAP specification. Examples of JPA persistence providers include **Hibernate, EclipseLink, And OpenJPA**. These providers implement the JPA interfaces and provide the underlying functionality interact with databases.
+
+
+##### Spring Data JPA
+- Spring Data JPA is built on top of the JPA specification.
+- But it is not a JPA implementation itself.
+- Instead, it **simplifies working with JPA** by providing higher-level abstractions and utilities.
+- However, **to use Spring Data JPA effectively, you still need a JPA implementation,
+- Such as Hibernate, EclipseLink, OpenJPA or other JPA-compliant provider, to handle the actual database interaction.
+
+
+##### MongoDB        
+
+- JPA is primarily designed for working with relational databases, where data is stored in tables with a predefined schema. MongoDB, on the other hand, is a NoSQL database that uses a different data model, typically based on collections of documents, which are schema-less or have flexible schemas. This fundamental difference in data models and storage structures is why JPA is not used with MondoDB.
+
+- **In the case of MongoDB, you don't have a traditional JPA persistence provider.**
+- **MongoDB is a NoSQL database and _Spring Data MongoDB_ serves as the "persistence provider" for MongoDB.**
+  - **It provides the necessary abstractions and implementations to work with MongoDB in a Spring application.**
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-mongodb</artifactId>
+        </dependency>
+
+
+- Spring Data JPA is a part of the Spring Framework that simplifies data access in Java applications,
+- While Spring Data MongoDB provides similar functionality for MongoDB.
+
+
+- **Query Method DSL** and **criteria API** are two different ways to interact with a database when using **Spring Data JPA** for **relational databases** and **Spring Data MongoDB** for **MongoDB databases**.
+- **Query Method DSL** is a simple and convenient way to create queries based on method naming conventions,
+- while the **Criteria API** offers a more dynamic and programmatic approach for building complex and custom queries.
+
+
 
 
 

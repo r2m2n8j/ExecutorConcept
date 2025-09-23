@@ -151,6 +151,7 @@ class Employee {
                 '}';
     }
 }
+
 class EmployeeDTO {
     String empName;
     int empAge;
@@ -226,7 +227,7 @@ public class StringQuestions {
         // occurrenceOfEachWord();
         // find2ndHighest();
         // findWordsWithRespectToVowel();
-        // findFirstRepeatedCharacterWithStream();
+         findFirstRepeatedCharacterWithStream();
         // findFirstNonRepeatedCharacterWithStream();
         // arrangeListOfStringInAscendingOrder();
         // arrangeListOfStringInAscendingOrderWithAlphabeticalOrder();
@@ -252,11 +253,11 @@ public class StringQuestions {
 //        extractMessage();
 //        maxCharFrequencyInString();
 //        mapStringWithTheirLength();
-        convertEmployeeObjToEmployeeDTO();
+//        convertEmployeeObjToEmployeeDTO();
     }
 
     // Given a list of string, return a map of the String and its length
-    public static void mapStringWithTheirLength(){
+    public static void mapStringWithTheirLength() {
         List<String> fruits = Arrays.asList("orange", "banana", "kiwi", "kiwi");
 
         Map<String, Integer> fruitsMap = fruits.stream()
@@ -264,7 +265,7 @@ public class StringQuestions {
                         fruit -> fruit,
                         String::length,
                         (existing, duplicate) -> existing // resolving duplicate key
-                        ));
+                ));
         System.out.println(fruitsMap);
     }
 
@@ -291,7 +292,7 @@ public class StringQuestions {
     }
 
     /// Transform Employee object into EmployeeDTO
-    public static void convertEmployeeObjToEmployeeDTO(){
+    public static void convertEmployeeObjToEmployeeDTO() {
 
         List<Employee> employeeList = Arrays.asList(
                 new Employee("Anuj", 30, "Male", 8500),
@@ -834,6 +835,15 @@ public class StringQuestions {
     // Given a String, find the first repeated character
     public static void findFirstRepeatedCharacterWithStream() {
         String s = "Hello World";
+        Map<Character, Long> map = s.chars().mapToObj(ch -> (char) ch)
+                .collect(Collectors.groupingBy(
+                        ch -> ch,
+                        LinkedHashMap::new,
+                        Collectors.counting()
+                ));
+        map.forEach((key, value)->{
+            if(value >1) System.out.println(key);
+        });
         /** O(n) */
         Optional<Character> findFirst = s.chars()
                 .mapToObj(c -> (char) c)
@@ -848,8 +858,7 @@ public class StringQuestions {
                 .map(Map.Entry::getKey) // get the character
                 .findFirst(); // first in original order
 
-        if (findFirst.isPresent())
-            System.out.println("First non repeated char :: " + findFirst.get());
+//        findFirst.ifPresent(character -> System.out.println("First non repeated char :: " + character));
 
         /** O(n^2) */
         // Optional<Character> firstRepeated = s.chars() // IntStream of character codes
